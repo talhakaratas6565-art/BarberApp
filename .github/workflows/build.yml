@@ -22,14 +22,23 @@ jobs:
         pip install buildozer cython
         pip install -r requirements.txt || true
 
-    - name: Install Android SDK + Build Tools (AIDL Fix)
+    - name: Prepare Android SDK (NO PERMISSION FIX)
       run: |
-        sudo mkdir -p /usr/lib/android-sdk
-        sudo apt update
-        sudo apt install -y openjdk-17-jdk unzip wget
-        wget https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip
-        unzip build-tools_r33.0.1-linux.zip -d /usr/lib/android-sdk/
-        mv /usr/lib/android-sdk/android-13 /usr/lib/android-sdk/build-tools
+        mkdir -p $HOME/android-sdk
+        cd $HOME/android-sdk
+        wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+        unzip commandlinetools-linux-11076708_latest.zip
+        
+        mkdir -p cmdline-tools/latest
+        mv cmdline-tools/* cmdline-tools/latest/
+        
+        yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-33"
+        yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "build-tools;33.0.1"
+        yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platform-tools"
+
+    - name: Configure Buildozer to use local SDK
+      run: |
+        sed -i 's#^android.sdk_path =.*#android.sdk_path = '"$HOME"'/android-sdk#' buildozer.spec
 
     - name: Initialize buildozer
       run: |
