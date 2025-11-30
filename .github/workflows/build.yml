@@ -22,10 +22,14 @@ jobs:
         pip install buildozer cython
         pip install -r requirements.txt || true
 
-    - name: Install Android SDK/NDK
+    - name: Install Android SDK + Build Tools (AIDL Fix)
       run: |
+        sudo mkdir -p /usr/lib/android-sdk
         sudo apt update
-        sudo apt install -y python3-pip zip unzip openjdk-17-jdk
+        sudo apt install -y openjdk-17-jdk unzip wget
+        wget https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip
+        unzip build-tools_r33.0.1-linux.zip -d /usr/lib/android-sdk/
+        mv /usr/lib/android-sdk/android-13 /usr/lib/android-sdk/build-tools
 
     - name: Initialize buildozer
       run: |
