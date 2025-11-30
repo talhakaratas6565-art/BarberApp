@@ -22,7 +22,7 @@ jobs:
         pip install buildozer cython
         pip install -r requirements.txt || true
 
-    - name: Install Android SDK (Fixed)
+    - name: Install Android SDK (FINAL FIX)
       run: |
         mkdir -p $HOME/android-sdk
         cd $HOME/android-sdk
@@ -31,7 +31,7 @@ jobs:
         unzip commandlinetools-linux-11076708_latest.zip -d cmdline-tools-temp
 
         mkdir -p cmdline-tools/latest
-        mv cmdline-tools-temp/* cmdline-tools/latest/
+        mv cmdline-tools-temp/cmdline-tools/* cmdline-tools/latest/
 
         yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platform-tools"
         yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-33"
