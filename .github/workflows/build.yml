@@ -22,21 +22,22 @@ jobs:
         pip install buildozer cython
         pip install -r requirements.txt || true
 
-    - name: Prepare Android SDK (NO PERMISSION FIX)
+    - name: Install Android SDK (Fixed)
       run: |
         mkdir -p $HOME/android-sdk
         cd $HOME/android-sdk
+
         wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
-        unzip commandlinetools-linux-11076708_latest.zip
-        
+        unzip commandlinetools-linux-11076708_latest.zip -d cmdline-tools-temp
+
         mkdir -p cmdline-tools/latest
-        mv cmdline-tools/* cmdline-tools/latest/
-        
+        mv cmdline-tools-temp/* cmdline-tools/latest/
+
+        yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platform-tools"
         yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platforms;android-33"
         yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "build-tools;33.0.1"
-        yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platform-tools"
 
-    - name: Configure Buildozer to use local SDK
+    - name: Configure Buildozer SDK Path
       run: |
         sed -i 's#^android.sdk_path =.*#android.sdk_path = '"$HOME"'/android-sdk#' buildozer.spec
 
