@@ -1,0 +1,700 @@
+#:kivy 2.3.0
+
+############################################################
+# GLOBAL KART TEMA (GOLD STYLE)
+############################################################
+<GoldCard@BoxLayout>:
+    padding: 15
+    spacing: 10
+    size_hint_y: None
+    height: self.minimum_height
+    canvas.before:
+        Color:
+            rgba: 0.13, 0.13, 0.13, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20, 20, 20, 20]
+
+
+############################################################
+# BERBER LİSTE
+############################################################
+<BarberListScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        padding: 15
+        canvas.before:
+            Color:
+                rgba: 0.07, 0.07, 0.07, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Berberler"
+            font_size: 32
+            size_hint_y: None
+            height: 60
+            bold: True
+            color: 0.96, 0.82, 0.26, 1
+
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            spacing: 10
+
+            Button:
+                text: "Yeni Berber Ekle"
+                background_normal: ""
+                background_color: 0.96, 0.82, 0.26, 1
+                color: 0, 0, 0, 1
+                bold: True
+                on_release: root.go_add_barber()
+
+            Button:
+                text: "Admin Panel"
+                background_normal: ""
+                background_color: 0.2, 0.2, 0.2, 1
+                color: 0.96, 0.82, 0.26, 1
+                bold: True
+                on_release: root.go_admin()
+
+        ScrollView:
+            do_scroll_x: False
+            BoxLayout:
+                id: barber_list
+                orientation: "vertical"
+                spacing: 10
+                padding: 5
+                size_hint_y: None
+                height: self.minimum_height
+############################################################
+# BERBER DETAY
+############################################################
+<BarberDetailScreen>:
+    ScrollView:
+        do_scroll_x: False
+        canvas.before:
+            Color:
+                rgba: 0.07, 0.07, 0.07, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            id: detail_box
+            orientation: "vertical"
+            padding: 20
+            spacing: 15
+            size_hint_y: None
+            height: self.minimum_height
+
+            GoldCard:
+                orientation: "vertical"
+
+                AsyncImage:
+                    id: barber_photo
+                    source: ""
+                    size_hint_y: None
+                    height: 200
+
+                Label:
+                    id: barber_name
+                    text: ""
+                    font_size: 28
+                    size_hint_y: None
+                    height: 50
+                    bold: True
+                    color: 1, 1, 1, 1
+
+                Label:
+                    id: barber_phone
+                    text: ""
+                    font_size: 18
+                    size_hint_y: None
+                    height: 35
+                    color: 0.8, 0.8, 0.8, 1
+
+                Label:
+                    id: barber_location
+                    text: ""
+                    font_size: 18
+                    size_hint_y: None
+                    height: 35
+                    color: 0.8, 0.8, 0.8, 1
+
+            Label:
+                text: "Hizmetler"
+                font_size: 22
+                size_hint_y: None
+                height: 40
+                bold: True
+                color: 0.96, 0.82, 0.26, 1
+
+            BoxLayout:
+                id: services_box
+                orientation: "vertical"
+                spacing: 5
+                size_hint_y: None
+                height: self.minimum_height
+
+            Label:
+                text: "Fiyatlar"
+                font_size: 22
+                size_hint_y: None
+                height: 40
+                bold: True
+                color: 0.96, 0.82, 0.26, 1
+
+            BoxLayout:
+                id: prices_box
+                orientation: "vertical"
+                spacing: 5
+                size_hint_y: None
+                height: self.minimum_height
+
+            BoxLayout:
+                size_hint_y: None
+                height: 55
+                spacing: 10
+
+                Button:
+                    text: "Randevu Al"
+                    background_normal: ""
+                    background_color: 0.96, 0.82, 0.26, 1
+                    color: 0, 0, 0, 1
+                    bold: True
+                    on_release: root.go_appointment()
+
+                Button:
+                    text: "Randevuları Gör"
+                    background_normal: ""
+                    background_color: 0.2, 0.2, 0.2, 1
+                    color: 0.96, 0.82, 0.26, 1
+                    bold: True
+                    on_release: root.go_list()
+
+            Button:
+                text: "Berberi Düzenle"
+                size_hint_y: None
+                height: 50
+                background_normal: ""
+                background_color: 0.2, 0.2, 0.2, 1
+                color: 0.96, 0.82, 0.26, 1
+                bold: True
+                on_release: root.go_edit()
+
+            Button:
+                text: "Geri"
+                size_hint_y: None
+                height: 50
+                background_normal: ""
+                background_color: 0.15, 0.15, 0.15, 1
+                color: 0.96, 0.82, 0.26, 1
+                bold: True
+                on_release: app.root.current = "barbers"
+
+
+
+############################################################
+# TARİH SEÇİM
+############################################################
+<DateSelectScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 15
+        canvas.before:
+            Color:
+                rgba: 0.07, 0.07, 0.07, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Tarih Seç"
+            font_size: 30
+            size_hint_y: None
+            height: 60
+            bold: True
+            color: 0.96, 0.82, 0.26, 1
+
+        ScrollView:
+            do_scroll_x: False
+            BoxLayout:
+                id: date_list
+                orientation: "vertical"
+                spacing: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+        Button:
+            text: "Geri"
+            size_hint_y: None
+            height: 50
+            background_normal: ""
+            background_color: 0.15, 0.15, 0.15, 1
+            color: 0.96, 0.82, 0.26, 1
+            on_release: app.root.current = "appointment"
+
+
+
+############################################################
+# RANDEVU OLUŞTURMA
+############################################################
+<AppointmentScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 15
+        canvas.before:
+            Color:
+                rgba: 0.07, 0.07, 0.07, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Randevu Oluştur"
+            font_size: 30
+            size_hint_y: None
+            height: 60
+            bold: True
+            color: 0.96, 0.82, 0.26, 1
+
+        TextInput:
+            id: input_name
+            hint_text: "Adınız"
+            multiline: False
+            size_hint_y: None
+            height: 45
+            foreground_color: 1,1,1,1
+            background_color: 0.15,0.15,0.15,1
+            cursor_color: 0.96,0.82,0.26,1
+
+        Button:
+            text: "Tarih Seç"
+            size_hint_y: None
+            height: 45
+            background_normal: ""
+            background_color: 0.96,0.82,0.26,1
+            color: 0,0,0,1
+            bold: True
+            on_release: root.open_date_select()
+
+        Label:
+            id: selected_date
+            text: "Tarih seçilmedi"
+            font_size: 18
+            size_hint_y: None
+            height: 35
+            color: 0.9,0.9,0.9,1
+
+        Label:
+            text: "Saat Seç"
+            size_hint_y: None
+            height: 35
+            font_size: 20
+            color: 0.96,0.82,0.26,1
+
+        ScrollView:
+            do_scroll_x: False
+            size_hint_y: 0.4
+            BoxLayout:
+                id: time_buttons
+                orientation: "vertical"
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+        Label:
+            id: selected_time
+            text: "Saat seçilmedi"
+            font_size: 18
+            size_hint_y: None
+            height: 35
+            color: 0.9,0.9,0.9,1
+
+        Button:
+            text: "Randevuyu Kaydet"
+            size_hint_y: None
+            height: 50
+            background_normal: ""
+            background_color: 0.96,0.82,0.26,1
+            color: 0,0,0,1
+            bold: True
+            on_release: root.save_appointment()
+
+        Button:
+            text: "Geri"
+            size_hint_y: None
+            height: 50
+            background_normal: ""
+            background_color: 0.15,0.15,0.15,1
+            color: 0.96,0.82,0.26,1
+            on_release: app.root.current = "detail"
+############################################################
+# RANDEVU LİSTE
+############################################################
+<AppointmentListScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 15
+        canvas.before:
+            Color:
+                rgba: 0.07, 0.07, 0.07, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Randevular"
+            size_hint_y: None
+            height: 60
+            font_size: 30
+            bold: True
+            color: 0.96, 0.82, 0.26, 1
+
+        ScrollView:
+            do_scroll_x: False
+            BoxLayout:
+                id: appointment_list
+                orientation: "vertical"
+                spacing: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+        Button:
+            text: "Geri"
+            size_hint_y: None
+            height: 50
+            background_normal: ""
+            background_color: 0.15, 0.15, 0.15, 1
+            color: 0.96, 0.82, 0.26, 1
+            on_release: root.go_back()
+
+
+############################################################
+# YENİ BERBER EKLE
+############################################################
+<AddBarberScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+        canvas.before:
+            Color:
+                rgba: 0.07, 0.07, 0.07, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Yeni Berber Ekle"
+            font_size: 28
+            size_hint_y: None
+            height: 60
+            bold: True
+            color: 0.96, 0.82, 0.26, 1
+
+        TextInput:
+            id: add_name
+            hint_text: "Berber Adı"
+            multiline: False
+            size_hint_y: None
+            height: 45
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.15, 0.15, 0.15, 1
+
+        TextInput:
+            id: add_phone
+            hint_text: "Telefon"
+            multiline: False
+            size_hint_y: None
+            height: 45
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.15, 0.15, 0.15, 1
+
+        TextInput:
+            id: add_location
+            hint_text: "Konum"
+            multiline: False
+            size_hint_y: None
+            height: 45
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.15, 0.15, 0.15, 1
+
+        TextInput:
+            id: add_photo
+            hint_text: "Fotoğraf URL"
+            multiline: False
+            size_hint_y: None
+            height: 45
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.15, 0.15, 0.15, 1
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: "Kaydet"
+                background_normal: ""
+                background_color: 0.96, 0.82, 0.26, 1
+                color: 0, 0, 0, 1
+                bold: True
+                on_release: root.save_new_barber()
+
+            Button:
+                text: "İptal"
+                background_normal: ""
+                background_color: 0.15, 0.15, 0.15, 1
+                color: 0.96, 0.82, 0.26, 1
+                on_release: app.root.current = "barbers"
+
+
+############################################################
+# BERBER DÜZENLE
+############################################################
+<EditBarberScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+        canvas.before:
+            Color:
+                rgba: 0.07, 0.07, 0.07, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Berber Bilgilerini Düzenle"
+            font_size: 28
+            size_hint_y: None
+            height: 60
+            bold: True
+            color: 0.96, 0.82, 0.26, 1
+
+        TextInput:
+            id: edit_name
+            hint_text: "Berber Adı"
+            multiline: False
+            size_hint_y: None
+            height: 45
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.15, 0.15, 0.15, 1
+
+        TextInput:
+            id: edit_phone
+            hint_text: "Telefon"
+            multiline: False
+            size_hint_y: None
+            height: 45
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.15, 0.15, 0.15, 1
+
+        TextInput:
+            id: edit_location
+            hint_text: "Konum"
+            multiline: False
+            size_hint_y: None
+            height: 45
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.15, 0.15, 0.15, 1
+
+        TextInput:
+            id: edit_photo
+            hint_text: "Fotoğraf URL"
+            multiline: False
+            size_hint_y: None
+            height: 45
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.15, 0.15, 0.15, 1
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: "Kaydet"
+                background_normal: ""
+                background_color: 0.96, 0.82, 0.26, 1
+                color: 0, 0, 0, 1
+                bold: True
+                on_release: root.save_changes()
+
+            Button:
+                text: "İptal"
+                background_normal: ""
+                background_color: 0.15, 0.15, 0.15, 1
+                color: 0.96, 0.82, 0.26, 1
+                on_release: app.root.current = "detail"
+
+
+############################################################
+# ADMIN GİRİŞ
+############################################################
+<AdminLoginScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+        canvas.before:
+            Color:
+                rgba: 0.07, 0.07, 0.07, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Admin Girişi"
+            font_size: 28
+            size_hint_y: None
+            height: 60
+            bold: True
+            color: 0.96, 0.82, 0.26, 1
+
+        TextInput:
+            id: admin_password
+            hint_text: "Admin şifresi"
+            password: True
+            multiline: False
+            size_hint_y: None
+            height: 45
+            foreground_color: 1, 1, 1, 1
+            background_color: 0.15, 0.15, 0.15, 1
+            cursor_color: 0.96, 0.82, 0.26, 1
+
+        Label:
+            id: admin_error
+            text: ""
+            color: 1, 0.3, 0.3, 1
+            size_hint_y: None
+            height: 30
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: "Giriş"
+                background_normal: ""
+                background_color: 0.96, 0.82, 0.26, 1
+                color: 0, 0, 0, 1
+                bold: True
+                on_release: root.check_password()
+
+            Button:
+                text: "İptal"
+                background_normal: ""
+                background_color: 0.15, 0.15, 0.15, 1
+                color: 0.96, 0.82, 0.26, 1
+                on_release: app.root.current = "barbers"
+
+
+############################################################
+# ADMIN PANEL
+############################################################
+<AdminPanelScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 15
+        canvas.before:
+            Color:
+                rgba: 0.07, 0.07, 0.07, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Admin Panel"
+            font_size: 30
+            size_hint_y: None
+            height: 60
+            bold: True
+            color: 0.96, 0.82, 0.26, 1
+
+        GoldCard:
+            orientation: "vertical"
+            spacing: 10
+
+            Button:
+                text: "Randevu Yönetimi"
+                size_hint_y: None
+                height: 50
+                background_normal: ""
+                background_color: 0.96, 0.82, 0.26, 1
+                color: 0, 0, 0, 1
+                bold: True
+                on_release: root.go_admin_appointments()
+
+            Button:
+                text: "Berber Ekle"
+                size_hint_y: None
+                height: 50
+                background_normal: ""
+                background_color: 0.2, 0.2, 0.2, 1
+                color: 0.96, 0.82, 0.26, 1
+                bold: True
+                on_release: root.go_add_barber()
+
+            Button:
+                text: "Ana Listeye Dön"
+                size_hint_y: None
+                height: 50
+                background_normal: ""
+                background_color: 0.15, 0.15, 0.15, 1
+                color: 0.96, 0.82, 0.26, 1
+                bold: True
+                on_release: root.go_home()
+
+
+############################################################
+# ADMIN RANDEVU YÖNETİMİ
+############################################################
+<AdminAppointmentScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 15
+        canvas.before:
+            Color:
+                rgba: 0.07, 0.07, 0.07, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Randevu Yönetimi"
+            font_size: 30
+            size_hint_y: None
+            height: 60
+            bold: True
+            color: 0.96, 0.82, 0.26, 1
+
+        ScrollView:
+            do_scroll_x: False
+            BoxLayout:
+                id: admin_appointment_list
+                orientation: "vertical"
+                spacing: 10
+                size_hint_y: None
+                height: self.minimum_height
+
+        Button:
+            text: "Geri"
+            size_hint_y: None
+            height: 50
+            background_normal: ""
+            background_color: 0.15, 0.15, 0.15, 1
+            color: 0.96, 0.82, 0.26, 1
+            on_release: app.root.current = "adminpanel"
